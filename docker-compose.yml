@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: audit_service_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=audit_service_development
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - audit_network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: audit_service_api
+    ports:
+      - "3002:3002"
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    environment:
+      - RAILS_ENV=development
+      - MONGODB_HOST=mongodb
+      - MONGODB_PORT=27017
+      - MONGODB_DATABASE=audit_service_development
+      - PORT=3002
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    command: >
+      sh -c "bundle install &&
+             rails db:mongoid:create_indexes &&
+             rails server -b 0.0.0.0 -p 3002"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3002/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - audit_network
+
+volumes:
+  mongodb_data:
+  bundle_cache:
+
+networks:
+  audit_network:
+    driver: bridge

@@ -1,0 +1,48 @@
+development:
+  clients:
+    default:
+      database: <%= ENV.fetch('MONGODB_DATABASE', 'audit_service_development') %>
+      hosts:
+        - <%= ENV.fetch('MONGODB_HOST', 'localhost') %>:<%= ENV.fetch('MONGODB_PORT', '27017') %>
+      options:
+        max_pool_size: 5
+        min_pool_size: 1
+
+  options:
+    belongs_to_required_by_default: false
+    raise_not_found_error: true
+    use_activesupport_time_zone: true
+
+test:
+  clients:
+    default:
+      database: <%= ENV.fetch('MONGODB_DATABASE', 'audit_service_test') %>
+      hosts:
+        - <%= ENV.fetch('MONGODB_HOST', 'localhost') %>:<%= ENV.fetch('MONGODB_PORT', '27017') %>
+      options:
+        read:
+          mode: :primary
+        max_pool_size: 1
+
+  options:
+    belongs_to_required_by_default: false
+    raise_not_found_error: true
+    use_activesupport_time_zone: true
+
+production:
+  clients:
+    default:
+      database: <%= ENV.fetch('MONGODB_DATABASE') %>
+      hosts:
+        - <%= ENV.fetch('MONGODB_HOST') %>:<%= ENV.fetch('MONGODB_PORT') %>
+      options:
+        max_pool_size: 20
+        min_pool_size: 5
+        connect_timeout: 10
+        socket_timeout: 30
+        server_selection_timeout: 30
+
+  options:
+    belongs_to_required_by_default: false
+    raise_not_found_error: true
+    use_activesupport_time_zone: true

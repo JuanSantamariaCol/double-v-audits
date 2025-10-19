@@ -19,7 +19,7 @@ Este servicio registra todas las operaciones que ocurren en el sistema:
 
 ---
 
-## 🚀 Inicio Rápido con Docker
+##  Inicio Rápido con Docker
 
 ### 1. Clonar el repositorio
 ```bash
@@ -59,7 +59,7 @@ Deberías ver:
 
 ---
 
-## 🛠️ Comandos Útiles de Docker
+##  Comandos Útiles de Docker
 
 ### Ver logs en tiempo real
 ```bash
@@ -95,7 +95,7 @@ docker-compose up --build
 
 ---
 
-## 📡 Endpoints de la API
+##  Endpoints de la API
 
 ### Health Check
 ```bash
@@ -149,7 +149,7 @@ GET /api/v1/audit_events/entity/CLI-001
 
 ---
 
-## 📝 Ejemplos de Uso
+##  Ejemplos de Uso
 
 ### Usando cURL
 
@@ -180,7 +180,7 @@ curl "http://localhost:3002/api/v1/audit_events/entity/CLI-123"
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 ### Usando Docker (Recomendado)
 
@@ -259,16 +259,16 @@ docker-compose exec -T -e RAILS_ENV=test api rspec
 
 ### Índices de MongoDB (optimización)
 
-- `entity_id` ⚡
-- `entity_type` ⚡
-- `event_type` ⚡
-- `occurred_at` (descendente) ⚡
-- `created_at` (descendente) ⚡
-- Compuesto: `entity_type` + `entity_id` ⚡
+- `entity_id` 
+- `entity_type` 
+- `event_type` 
+- `occurred_at` (descendente) 
+- `created_at` (descendente) 
+- Compuesto: `entity_type` + `entity_id` 
 
 ---
 
-## ⚙️ Configuración (Avanzado)
+## Configuración (Avanzado)
 
 ### Variables de Entorno
 
@@ -307,15 +307,7 @@ rails server -p 3002
 
 ---
 
-## 📖 Documentación Adicional
-
-- **API_EXAMPLES.md**: Más ejemplos de uso de la API
-- **QUICK_START.md**: Guía rápida de inicio
-- **CLAUDE.md**: Guía para desarrollo con Claude
-
----
-
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### El contenedor no inicia
 ```bash
@@ -342,13 +334,3 @@ docker-compose up --build -d
 ```
 
 ---
-
-## 📞 Soporte
-
-Para preguntas o problemas, contactar al equipo de desarrollo.
-
----
-
-## 📄 Licencia
-
-Propietario - FactuMarket S.A.

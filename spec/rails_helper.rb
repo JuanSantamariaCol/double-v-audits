@@ -7,6 +7,10 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 require 'factory_bot_rails'
 require 'database_cleaner/mongoid'
+require 'shoulda/matchers'
+
+# Disable host authorization for tests
+Rails.application.config.hosts.clear
 
 # Shoulda Matchers configuration for Mongoid
 Shoulda::Matchers.configure do |config|
@@ -36,6 +40,12 @@ end
 RSpec.configure do |config|
   # Remove this line to enable support for ActiveRecord
   config.use_active_record = false
+
+  # Allow all hosts in request specs
+  config.before(:each, type: :request) do
+    host! "www.example.com"
+    Rails.application.config.hosts.clear
+  end
 
   # FactoryBot configuration
   config.include FactoryBot::Syntax::Methods

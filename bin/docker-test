@@ -1,0 +1,5 @@
+#!/bin/bash
+# Docker Test Runner
+# Ejecuta tests de RSpec dentro del contenedor Docker en modo test
+
+docker-compose exec -T -e RAILS_ENV=test api bundle exec rspec "$@"

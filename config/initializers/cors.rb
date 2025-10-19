@@ -5,13 +5,16 @@
 
 # Read more: https://github.com/cyu/rack-cors
 
-Rails.application.config.middleware.insert_before 0, Rack::Cors do
-  allow do
-    origins '*' # In production, replace with specific domains
+# Don't use CORS middleware in test environment to avoid 403 errors in RSpec
+unless Rails.env.test?
+  Rails.application.config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins '*' # In production, replace with specific domains
 
-    resource "*",
-      headers: :any,
-      methods: [:get, :post, :put, :patch, :delete, :options, :head],
-      expose: ['X-Page', 'X-Total-Pages', 'X-Total-Count', 'X-Per-Page']
+      resource "*",
+        headers: :any,
+        methods: [:get, :post, :put, :patch, :delete, :options, :head],
+        expose: ['X-Page', 'X-Total-Pages', 'X-Total-Count', 'X-Per-Page']
+    end
   end
 end

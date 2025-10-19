@@ -182,20 +182,56 @@ curl "http://localhost:3002/api/v1/audit_events/entity/CLI-123"
 
 ## 🧪 Testing
 
-### Correr todos los tests
+### Usando Docker (Recomendado)
+
+**Script automatizado:**
 ```bash
-docker-compose exec api rspec
+# Ejecutar todos los tests
+./bin/docker-test
+
+# Ejecutar tests específicos
+./bin/docker-test spec/models
+./bin/docker-test spec/requests/health_spec.rb
+
+# Con formato detallado
+./bin/docker-test --format documentation
 ```
 
-### Correr tests con formato detallado
+**Comando manual:**
 ```bash
-docker-compose exec api rspec --format documentation
+# IMPORTANTE: Usar -e RAILS_ENV=test para ejecutar en modo test
+docker-compose exec -T -e RAILS_ENV=test api rspec
+
+# Con formato detallado
+docker-compose exec -T -e RAILS_ENV=test api rspec --format documentation
+```
+
+### Localmente (Sin Docker)
+
+```bash
+# Ejecutar todos los tests
+RAILS_ENV=test bundle exec rspec
+
+# Con formato detallado
+RAILS_ENV=test bundle exec rspec --format documentation
 ```
 
 ### Ver cobertura de tests
 ```bash
-docker-compose exec api rspec
+./bin/docker-test
 # Luego abrir: coverage/index.html
+```
+
+### ⚠️ Nota Importante sobre Testing en Docker
+
+Los tests **DEBEN** ejecutarse con `RAILS_ENV=test`. Si ejecutas:
+```bash
+# ❌ INCORRECTO - Correrá en modo development y fallará
+docker-compose exec api rspec
+
+# ✅ CORRECTO - Usa el script o la variable de entorno
+./bin/docker-test
+docker-compose exec -T -e RAILS_ENV=test api rspec
 ```
 
 ---
